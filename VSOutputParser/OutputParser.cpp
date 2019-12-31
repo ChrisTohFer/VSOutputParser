@@ -10,7 +10,7 @@ int main()
 
 	for (size_t i = 0; i < 12; ++i)
 	{
-		paths.push_back(ReplaceStringTokens(path, { StringToken("<C>", configs[i]) }));
+		paths.push_back(ReplaceStringTokens(path, { std::make_pair(std::string("<C>"), configs[i]) }));
 	}
 
 	logs = VERBOSE::ParseLogFiles(paths);

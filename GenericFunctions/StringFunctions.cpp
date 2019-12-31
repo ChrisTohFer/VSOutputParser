@@ -1,23 +1,18 @@
 #include "StringFunctions.h"
 #include <string>
 
-StringToken::StringToken(std::string tokenArg, std::string replacementArg)
-	: token(tokenArg)
-	, replacement(replacementArg)
-{}
-
-std::string ReplaceStringTokens(const std::string& str, std::initializer_list<StringToken> tokens)
+std::string ReplaceStringTokens(const std::string& str, std::initializer_list<std::pair<std::string, std::string>> tokens)
 {
 	std::string output = str;
 
-	//for each token, find and replace until none are left
+	//for each token type, find and replace until none are left
 	for (size_t i = 0u; i < tokens.size(); ++i)
 	{
 		bool tokensRemain = true;
 		while (tokensRemain)
 		{
-			const StringToken& tokenObject = *(tokens.begin() + i);
-			const std::string& token = tokenObject.token;
+			const auto& pair = *(tokens.begin() + i);
+			const auto& token = pair.first;
 
 			auto tokenStart = output.find(token);
 			if (tokenStart == std::string::npos)
@@ -26,7 +21,7 @@ std::string ReplaceStringTokens(const std::string& str, std::initializer_list<St
 			}
 			else
 			{
-				output.replace(tokenStart, token.size(), tokenObject.replacement);
+				output.replace(tokenStart, token.size(), pair.second);
 			}
 		}
 	}

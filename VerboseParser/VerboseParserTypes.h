@@ -4,10 +4,6 @@
 #include <map>
 #include <set>
 #include <string>
-#include <string>
-#include <set>
-#include <map>
-#include <vector>
 
 namespace VERBOSE
 {

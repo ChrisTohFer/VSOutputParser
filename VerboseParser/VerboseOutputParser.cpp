@@ -11,7 +11,7 @@ namespace
 {
 	using namespace VERBOSE;
 
-	//Contains state information used by parsing functions
+	//contains state information used by parsing functions
 	struct PARSING_STATE
 	{
 		LOG_CONTENT& log;
@@ -125,14 +125,14 @@ namespace
 namespace VERBOSE
 {
 	
-	//Parse the entire log file
+	//parse the entire log file
 	LOG_CONTENT ParseLogFile(const std::string& path)
 	{
 		std::ifstream logfile(path);
 		LOG_CONTENT content;
 		PARSING_STATE state(content);
 
-		//Loops through lines of file, exits loop when logfile is in an error state (eof)
+		//loops through lines of file, exits loop when logfile is in an error state (eof)
 		std::string line;
 		while (std::getline(logfile, line))
 		{
