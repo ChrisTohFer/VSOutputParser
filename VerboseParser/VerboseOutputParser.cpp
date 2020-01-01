@@ -124,9 +124,10 @@ namespace
 
 namespace VERBOSE
 {
-	
+
 	//parse the entire log file
-	LOG_CONTENT ParseLogFile(const std::string& path)
+	template<typename CHAR_TYPE>
+	LOG_CONTENT ParseLogFile(const std::basic_string<CHAR_TYPE, std::char_traits<CHAR_TYPE>, std::allocator<CHAR_TYPE>>& path)
 	{
 		std::ifstream logfile(path);
 		LOG_CONTENT content;
@@ -168,7 +169,8 @@ namespace VERBOSE
 	}
 
 	//parse multiple log files using multiple threads
-	std::vector<LOG_CONTENT> ParseLogFiles(const std::vector<std::string>& paths)
+	template<typename CHAR_TYPE>
+	std::vector<LOG_CONTENT> ParseLogFiles(const std::vector<std::basic_string<CHAR_TYPE, std::char_traits<CHAR_TYPE>, std::allocator<CHAR_TYPE>>>& paths)
 	{
 		//set up storage for each thread
 		std::vector<LOG_CONTENT> logs;
@@ -201,4 +203,12 @@ namespace VERBOSE
 
 		return logs;
 	}
+
+	//instantiate functions templates for std::string and std::wstring
+
+	template LOG_CONTENT ParseLogFile(const std::basic_string<char, std::char_traits<char>, std::allocator<char>>& path);
+	template LOG_CONTENT ParseLogFile(const std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>& path);
+	template std::vector<LOG_CONTENT> ParseLogFiles(const std::vector<std::basic_string<char, std::char_traits<char>, std::allocator<char>>>& paths);
+	template std::vector<LOG_CONTENT> ParseLogFiles(const std::vector<std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>>& paths);
+
 }
