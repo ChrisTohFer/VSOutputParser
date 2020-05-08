@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="VerboseOutputParser.cpp" />
     <ClCompile Include="VerboseParserTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="VerboseOutputParser.h" />
     <ClInclude Include="VerboseParserTypes.h" />
   </ItemGroup>

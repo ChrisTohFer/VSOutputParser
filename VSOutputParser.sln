@@ -17,6 +17,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericFunctions", "GenericFunctions\GenericFunctions.vcxproj", "{DE104F0C-4451-4328-8D74-2617EAF5EFDB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCFrontend", "MFCFrontend\MFCFrontend.vcxproj", "{04175CCD-90A8-4B65-8FDF-10D23BDE6B1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE104F0C-4451-4328-8D74-2617EAF5EFDB} = {DE104F0C-4451-4328-8D74-2617EAF5EFDB}
+		{CA2A638C-FA25-40BB-AA14-E4380FBFA324} = {CA2A638C-FA25-40BB-AA14-E4380FBFA324}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

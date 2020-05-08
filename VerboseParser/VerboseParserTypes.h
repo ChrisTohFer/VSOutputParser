@@ -40,6 +40,9 @@ namespace VERBOSE
 	{
 		std::map<std::string, int> libraryMap;
 		std::vector<LIBRARY> libraries;
+
+		LIBRARY& library(int);
+		LIBRARY& library(std::string);
 	};
 
 }

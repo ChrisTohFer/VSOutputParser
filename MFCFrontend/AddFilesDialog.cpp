@@ -6,6 +6,8 @@
 #include "AddFilesDialog.h"
 #include "afxdialogex.h"
 
+//Manual includes
+#include "VerboseParser/Parser.h"
 
 // AddFilesDialog dialog
 
@@ -56,17 +58,19 @@ LRESULT AddFilesDialog::OnDropFiles(WPARAM wParam, LPARAM)
 void AddFilesDialog::OnBnClickedOk()
 {
 	auto count = addfiles_listbox.GetCount();
-	if (count == 0)
-		return;
-	else if (count = 1)
+	
+	if (count == 1)
 	{
-		//Parse single
-
+		VERBOSE::parse_and_add(addfiles_listbox.GetItemText(0).GetString());
 	}
-	else
+	else if(count > 1)
 	{
 		//Parse multiple
+		std::vector<std::wstring> paths;
+		for (auto i = 0; i < count; ++i)
+			paths.push_back(addfiles_listbox.GetItemText(i).GetString());
 
+		VERBOSE::parse_and_add(paths);
 	}
 
 	CDialogEx::OnOK();
