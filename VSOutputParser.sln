@@ -16,12 +16,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VerboseParser", "VerbosePar
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericFunctions", "GenericFunctions\GenericFunctions.vcxproj", "{DE104F0C-4451-4328-8D74-2617EAF5EFDB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCTest", "MFCTest\MFCTest.vcxproj", "{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DE104F0C-4451-4328-8D74-2617EAF5EFDB} = {DE104F0C-4451-4328-8D74-2617EAF5EFDB}
-		{CA2A638C-FA25-40BB-AA14-E4380FBFA324} = {CA2A638C-FA25-40BB-AA14-E4380FBFA324}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -54,14 +48,6 @@ Global
 		{DE104F0C-4451-4328-8D74-2617EAF5EFDB}.Release|x64.Build.0 = Release|x64
 		{DE104F0C-4451-4328-8D74-2617EAF5EFDB}.Release|x86.ActiveCfg = Release|Win32
 		{DE104F0C-4451-4328-8D74-2617EAF5EFDB}.Release|x86.Build.0 = Release|Win32
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Debug|x64.ActiveCfg = Debug|x64
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Debug|x64.Build.0 = Debug|x64
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Debug|x86.ActiveCfg = Debug|Win32
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Debug|x86.Build.0 = Debug|Win32
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Release|x64.ActiveCfg = Release|x64
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Release|x64.Build.0 = Release|x64
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Release|x86.ActiveCfg = Release|Win32
-		{EFAF5E7B-E506-46ED-8E7C-A28EDBB3C41A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
