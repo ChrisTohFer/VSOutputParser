@@ -3,6 +3,7 @@
 #include <set>
 #include <algorithm>
 #include <thread>
+#include <type_traits>
 
 #include "VerboseParserTypes.h"
 #include "GenericFunctions/StringFunctions.h"
@@ -131,6 +132,11 @@ namespace VERBOSE
 	{
 		std::ifstream logfile(path);
 		LOG_CONTENT content;
+		if constexpr (std::is_same<CHAR_TYPE, wchar_t>())
+			content.wpath = path;
+		else
+			content.path = path;
+
 		PARSING_STATE state(content);
 
 		//loops through lines of file, exits loop when logfile is in an error state (eof)

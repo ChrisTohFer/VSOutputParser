@@ -38,6 +38,8 @@ namespace VERBOSE
 	//contains all the information parsed from a log file
 	struct LOG_CONTENT
 	{
+		std::string path;
+		std::wstring wpath;
 		std::map<std::string, int> libraryMap;
 		std::vector<LIBRARY> libraries;
 

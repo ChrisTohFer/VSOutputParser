@@ -7,6 +7,7 @@ std::string ReplaceStringTokens(const std::string& str, std::initializer_list<st
 
 //Take only the filename from a path
 std::string GetNameFromPath(const std::string& path);
+std::wstring GetNameFromPath(const std::wstring& path);
 
 //Remove any number of a particular character from the end of a string
 std::string RemoveTrailingCharacters(const std::string& str, char character);

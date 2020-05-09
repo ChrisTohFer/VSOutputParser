@@ -46,6 +46,23 @@ std::string GetNameFromPath(const std::string& path)
 	return path.substr(newFirstCharacter);
 }
 
+std::wstring GetNameFromPath(const std::wstring& path)
+{
+	//Find the last backslash or slash in the path
+	size_t newFirstCharacter = 0u;
+
+	auto slash = path.find_last_of('/');
+	if (slash != std::wstring::npos)
+		newFirstCharacter = slash + 1u;
+
+	auto backslash = path.find_last_of('\\');
+	if (backslash != std::wstring::npos && backslash >= newFirstCharacter)
+		newFirstCharacter = backslash + 1u;
+
+	//May crash if final character of path is a slash, but that shouldn't happen...
+	return path.substr(newFirstCharacter);
+}
+
 std::string RemoveTrailingCharacters(const std::string& str, char character)
 {
 	//Get position of last character that isn't character to be removed
