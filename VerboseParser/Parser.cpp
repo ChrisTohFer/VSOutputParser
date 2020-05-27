@@ -70,7 +70,7 @@ std::vector<VERBOSE::PROJECT_KEY> VERBOSE::projects(std::vector<LOG_KEY> logs)
 	for (auto i = 0u; i < logs.size(); ++i)
 	{
 		auto log = logs[i].log();
-		for (auto j = 0u; j < log.projects.size(); ++j)
+		for (auto j = 0; j < log.projects.size(); ++j)
 		{
 			auto project = log.projects[j];
 			result.push_back({ logs[i].index, j, project.name });

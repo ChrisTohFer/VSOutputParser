@@ -13,15 +13,6 @@ namespace VERBOSE
 		STATIC
 	};
 
-	//contains information on a library collected from multiple projects/log files
-	struct LIBRARY_SUMMARY
-	{
-		std::string name;
-		std::string path;
-		
-		std::map<std::string, LIBRARY> references;
-	};
-
 	//contains all the information parsed from a log file for a specific symbol
 	struct SYMBOL
 	{
@@ -43,6 +34,15 @@ namespace VERBOSE
 
 		LIBRARY(std::string pathArg);
 		bool IsUsed();
+	};
+
+	//contains information on a library collected from multiple projects/log files
+	struct LIBRARY_SUMMARY
+	{
+		std::string name;
+		std::string path;
+
+		std::map<std::string, LIBRARY> references;
 	};
 
 	//contains all the information parsed from a log file for a specific project
