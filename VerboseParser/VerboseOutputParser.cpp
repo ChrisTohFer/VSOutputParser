@@ -12,17 +12,42 @@ namespace
 {
 	using namespace VERBOSE;
 
+	//contains state information used by parsing functions regarding a single project
+	struct PROJECT_PARSING_STATE
+	{
+		int currentLib = 0;
+		std::string currentSymbol;
+		std::set<std::string> defaultLibs;
+	};
+
 	//contains state information used by parsing functions
 	struct PARSING_STATE
 	{
 		LOG_CONTENT& log;
-		LIBRARY* currentLib = nullptr;
-		SYMBOL* currentSymbol = nullptr;
-		std::set<std::string> defaultLibs;
+
+		int currentProject = 0;
+		std::vector<PROJECT_PARSING_STATE> project_states;
 
 		PARSING_STATE(LOG_CONTENT& logArg)
 			: log(logArg)
 		{}
+
+		PROJECT& project()
+		{
+			return log.projects[currentProject];
+		}
+		PROJECT_PARSING_STATE& project_state()
+		{
+			return project_states[currentProject];
+		}
+		LIBRARY& library()
+		{
+			return project().libraries[project_state().currentLib];
+		}
+		SYMBOL& symbol()
+		{
+			return library().symbols[project_state().currentSymbol];
+		}
 	};
 
 	//identify defaultlibs
@@ -35,7 +60,7 @@ namespace
 
 		if (term.size() > 12 && term.substr(0u, 12u) == "/DEFAULTLIB:")
 		{
-			state.defaultLibs.emplace(term.substr(12u));
+			state.project_state().defaultLibs.emplace(term.substr(12u));
 		}
 	}
 
@@ -51,8 +76,10 @@ namespace
 		if (term == "libraries")
 			return;
 
-		auto& libmap = state.log.libraryMap;
-		auto& libs = state.log.libraries;
+		//Create references to relevant containers
+		auto& project = state.project();
+		auto& libmap = project.libraryMap;
+		auto& libs = project.libraries;
 
 		auto library = libmap.find(term);
 		if (library == libmap.end())
@@ -60,18 +87,18 @@ namespace
 			//Need to create new library entry
 			libmap.emplace(std::make_pair(term, int(libs.size())));
 			libs.push_back(LIBRARY(term));
-			state.currentLib = &libs.back();
+			state.project_state().currentLib = libs.size() - 1;
 
 			//Check if library is a default library
-			auto& defLibs = state.defaultLibs;
+			auto& defLibs = state.project_state().defaultLibs;
 			auto name = GetNameFromPath(term);
 			if (defLibs.find(name) != defLibs.end())
-				state.currentLib->defaultLib = true;
+				state.library().defaultLib = true;
 		}
 		else
 		{
 			//Library already exists
-			state.currentLib = &(libs[libmap[term]]);
+			state.project_state().currentLib = libmap[term];
 		}
 	}
 
@@ -83,18 +110,14 @@ namespace
 		std::string term;
 		std::getline(lineStream, term);
 
-		auto& symbolMap = state.currentLib->symbols;
+		auto& symbolMap = state.project().libraries[state.project_state().currentLib].symbols;
 
 		auto symbol = symbolMap.find(term);
 		if (symbol == symbolMap.end())
 		{
 			symbolMap.emplace(term, SYMBOL());
-			state.currentSymbol = &(symbolMap[term]);
 		}
-		else
-		{
-			state.currentSymbol = &(symbol->second);
-		}
+		state.project_state().currentSymbol = term;
 	}
 
 	//identify references to the current symbol and lib
@@ -105,8 +128,9 @@ namespace
 		std::string term;
 		std::getline(lineStream, term);
 
-		state.currentLib->references.emplace(term);
-		state.currentSymbol->references.emplace(term);
+		auto& lib = state.project().libraries[state.project_state().currentLib];
+		lib.references.emplace(term);
+		lib.symbols[state.project_state().currentSymbol].references.emplace(term);
 	}
 
 	//identify whether lib is a dll (could also look into saving names of .obj files for later analysis)
@@ -118,7 +142,15 @@ namespace
 		std::getline(lineStream, term);
 
 		if (term.size() > 5u && term.substr(term.size() - 5u) == ".dll)")	//if term ends in .dll)
-			state.currentLib->type = LIBRARY::TYPE::DLL;
+			state.project().libraries[state.project_state().currentLib].type = LIBRARY::TYPE::DLL;
+	}
+
+	//Identify the name of a project in a multi project file
+	void ParseName(PARSING_STATE& state, std::istringstream& lineStream)
+	{
+		lineStream.ignore(24);	//Ignore " Build started: Project: "
+		
+		lineStream >> state.project().name;
 	}
 
 }
@@ -139,13 +171,66 @@ namespace VERBOSE
 
 		PARSING_STATE state(content);
 
+		content.projects.reserve(100); // this is absolute jank, but will prevent pointers from being invalidated
+
+		//Check if we are parsing multiple projects in a single log file by searching for visual studio "n>" project notation
+		bool multiple_projects;
+
+		{
+			char buffer[2];
+
+			//Read start of stream and reset position
+			auto start = logfile.tellg();
+			logfile.read(buffer, 2);
+			logfile.seekg(start);
+
+			multiple_projects = (buffer[0] == '1' && buffer[1] == '>');
+		}
+
+		if (!multiple_projects)
+		{
+			content.projects.push_back(PROJECT());
+			state.project_states.push_back(PROJECT_PARSING_STATE());
+			state.currentProject = 0;
+		}
+
+		//debug var
+		auto linenumber = 0;
+
 		//loops through lines of file, exits loop when logfile is in an error state (eof)
 		std::string line;
 		while (std::getline(logfile, line))
 		{
-			std::istringstream lineStream(line);
-			std::string term;
+			++linenumber;
+			std::istringstream lineStream;
+			
+			//If there are multiple projects, find out which project this line refers to and remove the number from the linestream
+			if (multiple_projects)
+			{
+				auto num_length = line.find_first_of('>');
+				
+				if (num_length > 3)	//We probably aren't reading a project number in this case
+					continue;
 
+				state.currentProject = std::stoi(line.substr(0, num_length)) - 1; //number counts from 1
+
+				if (state.currentProject >= content.projects.size())
+				{
+					content.projects.push_back(PROJECT());
+					state.project_states.push_back(PROJECT_PARSING_STATE());
+				}
+
+				if (line.size() == num_length + 1)	//The line contains no additional information
+					continue;
+				
+				lineStream.str(line.substr(num_length + 1));
+			}
+			else
+			{
+				lineStream.str(line);
+			}
+
+			std::string term;
 			lineStream >> term;
 			if (term == "Processed")
 			{
@@ -166,6 +251,10 @@ namespace VERBOSE
 			else if (term == "Loaded")
 			{
 				ParseLoadedLine(state, lineStream);
+			}
+			else if (term == "------")
+			{
+				ParseName(state, lineStream);
 			}
 		}
 

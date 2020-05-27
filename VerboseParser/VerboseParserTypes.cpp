@@ -11,12 +11,12 @@ bool VERBOSE::LIBRARY::IsUsed()
 	return symbols.size() != 0;
 }
 
-VERBOSE::LIBRARY& VERBOSE::LOG_CONTENT::library(int i)
+VERBOSE::LIBRARY& VERBOSE::PROJECT::library(int i)
 {
 	return libraries[i];
 }
 
-VERBOSE::LIBRARY& VERBOSE::LOG_CONTENT::library(std::string libpath)
+VERBOSE::LIBRARY& VERBOSE::PROJECT::library(std::string libpath)
 {
 	return libraries[libraryMap[libpath]];
 }

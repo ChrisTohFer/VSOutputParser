@@ -35,16 +35,23 @@ namespace VERBOSE
 		bool IsUsed();
 	};
 
-	//contains all the information parsed from a log file
-	struct LOG_CONTENT
+	//contains all the information parsed from a log file for a specific project
+	struct PROJECT
 	{
-		std::string path;
-		std::wstring wpath;
+		std::string name = "No Name";
 		std::map<std::string, int> libraryMap;
 		std::vector<LIBRARY> libraries;
 
 		LIBRARY& library(int);
 		LIBRARY& library(std::string);
+	};
+
+	//contains all the information parsed from a log file
+	struct LOG_CONTENT
+	{
+		std::string path;
+		std::wstring wpath;
+		std::vector<PROJECT> projects;
 	};
 
 }
