@@ -16,7 +16,7 @@ int ProjectPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	DWORD style = LBS_MULTIPLESEL | LBS_NOTIFY | WS_BORDER | WS_VSCROLL | WS_CHILD | WS_VISIBLE;
+	DWORD style = LBS_NOTIFY | WS_BORDER | WS_VSCROLL | WS_CHILD | WS_VISIBLE;
 	CRect rect(0, 0, 0, 0);
 	if (!m_wndBox.Create(style, rect, this, 4))
 		return -1;
@@ -35,22 +35,22 @@ void ProjectPane::OnSelChange()
 {
 	m_libraries_pane->ClearLibraries();
 
-	std::vector<VERBOSE::PROJECT_KEY> selected_projects;
-
-	//Get the selected logs
-	{
-		auto n = m_wndBox.GetSelCount();
-		auto indicies = new int[n];
-		m_wndBox.GetSelItems(n, indicies);
-
-		for (auto i = 0; i < n; ++i)
-			selected_projects.push_back(m_projects[indicies[i]]);
-
-		delete[] indicies;
-	}
-
-	auto libraries = VERBOSE::libraries(std::move(selected_projects));
-	m_libraries_pane->SetLibraries(std::move(libraries));
+	//std::vector<VERBOSE::PROJECT_KEY> selected_projects;
+	//
+	////Get the selected logs
+	//{
+	//	auto n = m_wndBox.GetSelCount();
+	//	auto indicies = new int[n];
+	//	m_wndBox.GetSelItems(n, indicies);
+	//
+	//	for (auto i = 0; i < n; ++i)
+	//		selected_projects.push_back(m_projects[indicies[i]]);
+	//
+	//	delete[] indicies;
+	//}
+	//
+	//auto libraries = VERBOSE::libraries(std::move(selected_projects));
+	m_libraries_pane->SetLibraries(m_projects[m_wndBox.GetCurSel()].project().libraries);
 }
 
 void ProjectPane::SetProjects(std::vector<VERBOSE::PROJECT_KEY> projects)

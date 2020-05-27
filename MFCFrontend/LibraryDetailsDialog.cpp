@@ -52,6 +52,13 @@ BOOL LibraryDetailsDialog::OnInitDialog()
 	m_type_edit.SetWindowTextW(m_library.type == VERBOSE::LIB_TYPE::STATIC ? L"Static" : L"DLL");
 	m_default_edit.SetWindowTextW(m_library.defaultLib ? L"Default" : L"Not default");
 
+	for (auto it = m_library.references.begin(), it_end = m_library.references.end(); it != it_end; ++it)
+	{
+		auto str = *it;
+		auto wstr = std::wstring(str.begin(), str.end());
+		m_references_list.AddString(wstr.c_str());
+	}
+
 	return 0;
 }
 

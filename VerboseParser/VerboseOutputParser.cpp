@@ -210,7 +210,7 @@ namespace VERBOSE
 			{
 				auto num_length = line.find_first_of('>');
 				
-				if (num_length > 3)	//We probably aren't reading a project number in this case
+				if (num_length > 3 || !std::isdigit(line[0]))	//We probably aren't reading a project number in this case
 					continue;
 
 				state.currentProject = std::stoi(line.substr(0, num_length)) - 1; //number counts from 1
