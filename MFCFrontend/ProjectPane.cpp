@@ -16,7 +16,7 @@ int ProjectPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	DWORD style = LBS_MULTIPLESEL | LBS_NOTIFY | WS_CHILD | WS_VISIBLE;
+	DWORD style = LBS_MULTIPLESEL | LBS_NOTIFY | WS_BORDER | WS_VSCROLL | WS_CHILD | WS_VISIBLE;
 	CRect rect(0, 0, 0, 0);
 	if (!m_wndBox.Create(style, rect, this, 4))
 		return -1;
