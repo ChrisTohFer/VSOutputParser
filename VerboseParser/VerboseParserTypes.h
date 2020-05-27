@@ -7,6 +7,20 @@
 
 namespace VERBOSE
 {
+	enum class LIB_TYPE
+	{
+		DLL,
+		STATIC
+	};
+
+	//contains information on a library collected from multiple projects/log files
+	struct LIBRARY_SUMMARY
+	{
+		std::string name;
+		std::string path;
+		
+		std::map<std::string, LIBRARY> references;
+	};
 
 	//contains all the information parsed from a log file for a specific symbol
 	struct SYMBOL
@@ -17,17 +31,13 @@ namespace VERBOSE
 	//contains all the information parsed from a log file for a specific library
 	struct LIBRARY
 	{
-		enum class TYPE
-		{
-			DLL,
-			STATIC
-		};
 
 		bool defaultLib = false;
 		
-		TYPE type = TYPE::STATIC;
+		LIB_TYPE type = LIB_TYPE::STATIC;
 		std::string name;
 		std::string path;
+		std::string parent = "No Name";
 		std::map<std::string, SYMBOL> symbols;
 		std::set<std::string> references;
 

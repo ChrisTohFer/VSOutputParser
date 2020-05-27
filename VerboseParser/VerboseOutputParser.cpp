@@ -88,6 +88,7 @@ namespace
 			libmap.emplace(std::make_pair(term, int(libs.size())));
 			libs.push_back(LIBRARY(term));
 			state.project_state().currentLib = libs.size() - 1;
+			state.library().parent = state.project().name;
 
 			//Check if library is a default library
 			auto& defLibs = state.project_state().defaultLibs;
@@ -142,7 +143,7 @@ namespace
 		std::getline(lineStream, term);
 
 		if (term.size() > 5u && term.substr(term.size() - 5u) == ".dll)")	//if term ends in .dll)
-			state.project().libraries[state.project_state().currentLib].type = LIBRARY::TYPE::DLL;
+			state.project().libraries[state.project_state().currentLib].type = LIB_TYPE::DLL;
 	}
 
 	//Identify the name of a project in a multi project file
