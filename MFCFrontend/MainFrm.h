@@ -5,6 +5,8 @@
 #pragma once
 #include "pch.h"
 #include "LogfilePane.h"
+#include "ProjectPane.h"
+#include "LibrariesPane.h"
 
 class CMainFrame : public CMDIFrameWndEx
 {
@@ -36,7 +38,9 @@ protected:  // control bar embedded members
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;
 
-	LogfilePane       m_logfile_pane;
+	LibrariesPane     m_library_pane;
+	ProjectPane       m_project_pane = ProjectPane(&m_library_pane);
+	LogfilePane       m_logfile_pane = LogfilePane(&m_project_pane);
 
 // Generated message map functions
 protected:

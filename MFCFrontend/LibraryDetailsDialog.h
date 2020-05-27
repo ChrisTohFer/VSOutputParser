@@ -1,5 +1,6 @@
 #pragma once
 
+#include "VerboseParser/Parser.h"
 
 // LibraryDetailsDialog dialog
 
@@ -19,6 +20,8 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
+	virtual BOOL OnInitDialog();
+
 	DECLARE_MESSAGE_MAP()
 public:
 	CEdit m_parent_edit;
@@ -27,4 +30,6 @@ public:
 	CEdit m_type_edit;
 	CEdit m_default_edit;
 	CListBox m_references_list;
+
+	VERBOSE::LIBRARY m_library = VERBOSE::LIBRARY("");
 };

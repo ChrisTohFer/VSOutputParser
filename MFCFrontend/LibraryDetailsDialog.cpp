@@ -32,6 +32,29 @@ void LibraryDetailsDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_REFERENCES_EDIT, m_references_list);
 }
 
+BOOL LibraryDetailsDialog::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	{
+		std::wstring str(m_library.parent.begin(), m_library.parent.end());
+		m_parent_edit.SetWindowTextW(str.c_str());
+	}
+	{
+		std::wstring str(m_library.name.begin(), m_library.name.end());
+		m_name_edit.SetWindowTextW(str.c_str());
+	}
+	{
+		std::wstring str(m_library.path.begin(), m_library.path.end());
+		m_path_edit.SetWindowTextW(str.c_str());
+	}
+
+	m_type_edit.SetWindowTextW(m_library.type == VERBOSE::LIB_TYPE::STATIC ? L"Static" : L"DLL");
+	m_default_edit.SetWindowTextW(m_library.defaultLib ? L"Default" : L"Not default");
+
+	return 0;
+}
+
 
 BEGIN_MESSAGE_MAP(LibraryDetailsDialog, CDialogEx)
 END_MESSAGE_MAP()

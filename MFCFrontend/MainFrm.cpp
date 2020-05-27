@@ -192,16 +192,32 @@ BOOL CMainFrame::CreateDockingWindows()
 {
 	UINT style = WS_CHILD | CBRS_RIGHT | CBRS_FLOAT_MULTI;
 	auto rect = CRect(0, 0, 200, 400);
-	CString strTitle = _T("Log files");
-	if (!m_logfile_pane.Create(strTitle, this, rect, TRUE, 7, style))
+
+	if (!m_logfile_pane.Create(L"Log files", this, rect, TRUE, 7, style))
 	{
 		return -1;
 	}
 	m_logfile_pane.EnableDocking(CBRS_ALIGN_ANY);
-	DockPane(&m_logfile_pane, AFX_IDW_DOCKBAR_LEFT);
 	m_logfile_pane.ShowPane(TRUE, FALSE, TRUE);
 
+	if (!m_project_pane.Create(L"Projects", this, rect, TRUE, 8, style))
+	{
+		return -1;
+	}
+	m_project_pane.EnableDocking(CBRS_ALIGN_ANY);
+	m_project_pane.ShowPane(TRUE, FALSE, TRUE);
 
+	if (!m_library_pane.Create(L"Libraries", this, rect, TRUE, 9, style))
+	{
+		return -1;
+	}
+	m_library_pane.EnableDocking(CBRS_ALIGN_ANY);
+	m_library_pane.ShowPane(TRUE, FALSE, TRUE);
+
+
+	DockPane(&m_library_pane, AFX_IDW_DOCKBAR_LEFT);
+	DockPane(&m_project_pane, AFX_IDW_DOCKBAR_LEFT);
+	DockPane(&m_logfile_pane, AFX_IDW_DOCKBAR_LEFT);
 
 	return TRUE;
 }
@@ -364,6 +380,9 @@ void CMainFrame::OnFileAddfiles()
 	dialog.DoModal();
 	
 	m_logfile_pane.m_wndBox.ResetContent();
+	m_project_pane.m_wndBox.ResetContent();
+	m_library_pane.m_wndBox.ResetContent();
+
 	auto& logs = VERBOSE::log_files();
 
 	for (auto i = 0; i < logs.size(); ++i)

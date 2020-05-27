@@ -57,6 +57,12 @@
     <ClInclude Include="LibraryDetailsDialog.h">
       <Filter>Custom Files</Filter>
     </ClInclude>
+    <ClInclude Include="LibrariesPane.h">
+      <Filter>Custom Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectPane.h">
+      <Filter>Custom Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCFrontend.cpp">
@@ -87,6 +93,12 @@
       <Filter>Custom Files</Filter>
     </ClCompile>
     <ClCompile Include="LibraryDetailsDialog.cpp">
+      <Filter>Custom Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LibrariesPane.cpp">
+      <Filter>Custom Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectPane.cpp">
       <Filter>Custom Files</Filter>
     </ClCompile>
   </ItemGroup>
