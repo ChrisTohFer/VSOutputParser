@@ -100,6 +100,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>GenericFunctions.lib;VerboseParser.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -126,6 +127,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>GenericFunctions.lib;VerboseParser.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../x64/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -155,6 +157,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>GenericFunctions.lib;VerboseParser.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -184,6 +187,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>GenericFunctions.lib;VerboseParser.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -200,6 +204,8 @@
     <ClInclude Include="AddFilesDialog.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="LibraryDetailsDialog.h" />
+    <ClInclude Include="LogfilePane.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFCFrontend.h" />
     <ClInclude Include="MFCFrontendDoc.h" />
@@ -212,6 +218,8 @@
   <ItemGroup>
     <ClCompile Include="AddFilesDialog.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="LibraryDetailsDialog.cpp" />
+    <ClCompile Include="LogfilePane.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MFCFrontend.cpp" />
     <ClCompile Include="MFCFrontendDoc.cpp" />

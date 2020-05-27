@@ -7,6 +7,7 @@
 #include "MFCFrontend.h"
 
 #include "MainFrm.h"
+#include "VerboseParser/Parser.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -189,6 +190,19 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::CreateDockingWindows()
 {
+	UINT style = WS_CHILD | CBRS_RIGHT | CBRS_FLOAT_MULTI;
+	auto rect = CRect(0, 0, 200, 400);
+	CString strTitle = _T("Log files");
+	if (!m_logfile_pane.Create(strTitle, this, rect, TRUE, 7, style))
+	{
+		return -1;
+	}
+	m_logfile_pane.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_logfile_pane, AFX_IDW_DOCKBAR_LEFT);
+	m_logfile_pane.ShowPane(TRUE, FALSE, TRUE);
+
+
+
 	return TRUE;
 }
 
@@ -349,4 +363,12 @@ void CMainFrame::OnFileAddfiles()
 	AddFilesDialog dialog;
 	dialog.DoModal();
 	
+	m_logfile_pane.m_wndBox.ResetContent();
+	auto& logs = VERBOSE::log_files();
+
+	for (auto i = 0; i < logs.size(); ++i)
+	{
+		m_logfile_pane.m_wndBox.AddString(logs[i].name().c_str());
+	}
+
 }

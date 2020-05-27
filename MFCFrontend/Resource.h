@@ -85,17 +85,25 @@
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
 #define IDD_ADDFILES                    310
+#define IDD_LIBDETAILS                  313
 #define IDC_MFCVSLISTBOX1               1000
 #define IDC_ADDFILES_LISTBOX            1000
+#define IDC_PARENT_EDIT                 1004
+#define IDC_LIST2                       1006
+#define IDC_REFERENCES_EDIT             1006
+#define IDC_NAME_EDIT                   1008
+#define IDC_PATH_EDIT                   1009
+#define IDC_TYPE_EDIT                   1010
+#define IDC_DEFAULT_EDIT                1011
 #define ID_FILE_ADDFILES                32771
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        313
+#define _APS_NEXT_RESOURCE_VALUE        315
 #define _APS_NEXT_COMMAND_VALUE         32772
-#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
